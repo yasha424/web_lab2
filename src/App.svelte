@@ -4,6 +4,15 @@
     let error = '';
     let showSpinner = false;
     let successSend = false;
+    let isOnline = true;
+
+    window.onoffline = () => {
+        isOnline = false;
+    }
+
+    window.ononline = () => {
+        isOnline = true;
+    }
 
     const sendMail = async() => {
         successSend = false;
@@ -43,17 +52,15 @@
                 body: JSON.stringify(formData),
                 method: 'POST'
             }).then((res) => {
+                showSpinner = false;
                 if (res.ok) {
                     successSend = true;
-                    showSpinner = false;
                     return res;
                 } else {
-                    showSpinner = false;
                     throw res;
                 }
             });
         } catch (e) {
-            console.log(e);
             if (e.status === 429) {
                 error = 'Too many requests. Try again later';
             } else if (e.status >= 500) {
@@ -80,12 +87,17 @@
             <div class="section">
                 <textarea name="message" class="message" placeholder="Message"></textarea>
             </div>
-            <button type="button" class="submit" on:click={sendMail}>Send</button>
+            {#if isOnline}
+                <button type="button" class="submit" on:click={sendMail}>Send</button>
+            {:else}
+                <button type="button" class="submit-offline">Send</button>
+            {/if}
         </form>
-        {#if error != ''}
+        {#if !isOnline}
+            <div class="notify-error">You need to be online</div>
+        {:else if error != ''}
             <div class="notify-error">{error}</div>
-        {/if}
-        {#if successSend}
+        {:else if successSend}
             <div class="notify-success">Message sent successfully</div>
         {/if}
         {#if showSpinner}
@@ -191,6 +203,17 @@
         transition: var(--btn-transition);
         background-color: var(--btn-hover-color);
         border: 1px solid var(--btn-border-color);
+    }
+
+    .form .submit-offline {
+        cursor: not-allowed;
+        width: 100px;
+        background-color: var(--btn-color);
+        color: var(--text-color);
+        margin: auto;
+        padding: 8px;
+        border: 1px solid transparent;
+        border-radius: 8px;
     }
 
     .spinner {
