@@ -23,6 +23,7 @@ export default function handler (req, res) {
         .join('\n');
 
     const html = sanitizeHtml(`<h2> Message from  form: </h2>${lines}`);
+
     const options = {
         from: `${process.env.EMAIL_ADRESS}`, // sender address
         to: `${process.env.EMAIL_ADRESS}`, // list of receivers

@@ -1,29 +1,32 @@
 <script>
-    // import sanitizeHtml from 'sanitize-html';
-
-    const form = {};
+    let form = {};
     let is_error = false;
     let error = "";
 
     const sendMail = async() => {
-        form.message = document.querySelector('.section .message');
-        console.log(form.message.value);
+        console.log(form.elements);
+        let formData = {};
+        Array.from(form.elements)
+            .forEach((e) => {
+                formData[e.name] = e.value;
+            });
 
-        if (!form.firstName) {
+        console.log(formData);
+        if (!form.FirstName) {
             is_error = true;
             error = "First name cannot be empty";
             return;
         }
-        else if (!form.lastName) {
+        else if (!form.LastName) {
             is_error = true;
             error = "Last name cannot be empty";
             return;
         }
-        else if (!(/^[A-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(form.email))){
+        else if (!(/^[A-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(form.Email))){
             is_error = true;
             error = "Invalid email address";
             return;
-        } else if (!(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(form.phone))) {
+        } else if (!(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(form.Phone))) {
             is_error = true;
             error = "Invalid phone format";
             return;
@@ -40,7 +43,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: form,
+            body: JSON.stringify(formData),
             method: 'POST'
         }).then((res) => {
             console.log(res);
@@ -50,18 +53,18 @@
 
 <main>
     <div class="container">
-        <form class="form">
+        <form class="form" bind:this={form}>
             <span class="header">Email form</span>
             <div class="section">
-                <input type="text" bind:value={form.firstName} placeholder="First name" />
-                <input type="text" bind:value={form.lastName} placeholder="Last name" />
+                <input name="firstName" type="text" bind:value={form.FirstName} placeholder="First name" />
+                <input name="lastName" type="text" bind:value={form.LastName} placeholder="Last name" />
             </div>
             <div class="section">
-                <input type="email" bind:value={form.email} placeholder="Email" />
-                <input type="phone" bind:value={form.phone} placeholder="Phone" />
+                <input name="email" type="email" bind:value={form.Email} placeholder="Email" />
+                <input name="phone" type="phone" bind:value={form.Phone} placeholder="Phone" />
             </div>
             <div class="section">
-                <textarea name="text" class="message" placeholder="Message"></textarea>
+                <textarea name="message" class="message" placeholder="Message"></textarea>
             </div>
             <button type="button" class="submit" on:click={sendMail}>Send</button>
         </form>
