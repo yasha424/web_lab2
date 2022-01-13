@@ -33,7 +33,7 @@ export default function handler (req, res) {
 
     if (currentIpUser.count > rateLimit.ipNumberCalls &&
         currentTime - currentIpUser.time <= rateLimit.timeSeconds * 1000) {
-        return res.status(429).json({ code: '429', error: 'Too many requests' });
+        return res.status(429).json({ error: 'Too many requests' });
     }
 
     if (currentTime - currentIpUser.time > rateLimit.timeSeconds * 1000) {
