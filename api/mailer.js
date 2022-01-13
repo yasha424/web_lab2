@@ -14,7 +14,14 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+let count = 0;
+
 export default function handler (req, res) {
+    count++;
+    if (count > 3) {
+        return res.status(429).json({ message: 'rate limit is reached' });
+    }
+
     if (!transporter) {
         return res.status(500).send('Mail is undefined');
     }
