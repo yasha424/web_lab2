@@ -61,9 +61,12 @@
             });
         } catch (e) {
             is_error = true;
-            console.log(e.json());
             console.log(e);
-            error = e.json().error;
+            if (e.status === 429) {
+                error = 'Too many requests. Try again later';
+            } else if (e.status >= 500) {
+                error = 'Server error';
+            }
         }
         showSpinner = false;
     };
