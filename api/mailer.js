@@ -41,7 +41,7 @@ export default function handler (req, res) {
     rateLimit.ipData.set(currentIp, currentIpUser);
 
     if (!transporter) {
-        return res.status(500).send('Mail is undefined');
+        return res.status(501).json({ error: 'Mail is undefined' });
     }
     const lines = Object.entries(req.body)
         .map(([key, val]) => `<p><b>${key}: </b>${val}</p>`)
