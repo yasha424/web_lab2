@@ -15,12 +15,12 @@ const transporter = nodemailer.createTransport({
 });
 
 export default function handler (req, res) {
-    let html = '';
-    try {
-        html = sanitizeHtml(req.body.message);
-    } catch (e) {
-        return res.status(430).json({ error: 'html sanitize error' });
-    }
+    const lines = Object.entries(req.body.message)
+        .map(([key, val]) => `<p><b>${key}: </b>${val}</p>`)
+        .join('\n');
+
+    const html = sanitizeHtml(`<h2> Message from  form: </h2>${lines}`);
+
     const options = {
         from: `${process.env.EMAIL_ADRESS}`, // sender address
         to: `${process.env.EMAIL_ADRESS}`, // list of receivers
