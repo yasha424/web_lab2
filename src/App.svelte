@@ -8,14 +8,12 @@
 
     const sendMail = async() => {
         successSend = false;
-        console.log(form.elements);
         let formData = {};
         Array.from(form.elements)
             .forEach((e) => {
                 formData[e.name] = e.value;
             });
 
-        console.log(formData);
         if (!form.FirstName) {
             is_error = true;
             error = "First name cannot be empty";

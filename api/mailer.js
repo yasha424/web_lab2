@@ -2,9 +2,10 @@ const nodemailer = require('nodemailer');
 const sanitizeHtml = require('sanitize-html');
 
 const transporter = nodemailer.createTransport({
+    service: 'gmail',
     host: process.env.HOST,
-    port: process.env.PORT,
-    secure: true,
+    // port: process.env.PORT,
+    secure: false,
     auth: {
         user: process.env.EMAIL_ADRESS,
         pass: process.env.EMAIL_PASSWORD,
@@ -21,6 +22,10 @@ const rateLimit = {
 };
 
 export default function handler (req, res) {
+    if (!transporter) {
+        return res.status(501).json({ error: 'Mail is undefined' });
+    }
+
     const currentTime = new Date();
     const currentIp = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
     let currentIpUser = rateLimit.ipData.get(currentIp);
@@ -44,9 +49,6 @@ export default function handler (req, res) {
     currentIpUser.time = new Date();
     rateLimit.ipData.set(currentIp, currentIpUser);
 
-    if (!transporter) {
-        return res.status(501).json({ error: 'Mail is undefined' });
-    }
     const lines = Object.entries(req.body)
         .map(([key, val]) => `<p><b>${key}: </b>${val}</p>`)
         .join('\n');
