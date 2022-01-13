@@ -22,13 +22,16 @@ const rateLimit = {
 
 export default function handler (req, res) {
     const currentTime = new Date();
-    const currentIp = req.headers['x-forward-for'];
-    const currentIpUser = rateLimit.ipData.get(currentIp) ?? {
-        count: 0,
-        time: currentTime - (rateLimit.timeSeconds + 1) * 1000
-    };
+    const currentIp = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
+    let currentIpUser = rateLimit.ipData.get(currentIp);
+    if (!currentIpUser) {
+        currentIpUser = {
+            count: 0,
+            time: currentTime - (rateLimit.timeSeconds + 1) * 1000
+        };
+    }
 
-    if (currentIpUser.count + 1 > rateLimit.ipNumberCalls ||
+    if (currentIpUser.count > rateLimit.ipNumberCalls ||
         currentTime - currentIpUser.time <= rateLimit.timeSeconds * 1000) {
         return res.status(429).json({ code: '429', error: 'Too many requests' });
     }
