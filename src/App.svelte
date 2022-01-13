@@ -1,8 +1,7 @@
 <script>
     import { Moon } from 'svelte-loading-spinners';
     let form = {};
-    let is_error = false;
-    let error = "";
+    let error = '';
     let showSpinner = false;
     let successSend = false;
 
@@ -15,30 +14,24 @@
             });
 
         if (!form.FirstName) {
-            is_error = true;
             error = "First name cannot be empty";
             return;
         }
         else if (!form.LastName) {
-            is_error = true;
             error = "Last name cannot be empty";
             return;
         }
         else if (!(/^[A-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(form.Email))){
-            is_error = true;
             error = "Invalid email address";
             return;
         } else if (!(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(form.Phone))) {
-            is_error = true;
             error = "Invalid phone format";
             return;
         } else if (!form.message.value) {
-            is_error = true;
             error = "Message cannot be empty";
             return;
         }
 
-        is_error = false;
         error = '';
 
         showSpinner = true;
@@ -58,12 +51,13 @@
                 }
             });
         } catch (e) {
-            is_error = true;
             console.log(e);
             if (e.status === 429) {
                 error = 'Too many requests. Try again later';
             } else if (e.status >= 500) {
                 error = 'Server error';
+            } else if (e.status === 404) {
+                error = 'Cannot connect to server';
             }
         }
         showSpinner = false;
@@ -87,7 +81,7 @@
             </div>
             <button type="button" class="submit" on:click={sendMail}>Send</button>
         </form>
-        {#if is_error}
+        {#if error != ''}
             <div class="notify-error">{error}</div>
         {/if}
         {#if successSend}
