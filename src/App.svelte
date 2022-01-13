@@ -68,6 +68,8 @@
             } else if (e.status === 404) {
                 error = 'Cannot connect to server';
             }
+        } finally {
+            showSpinner = false;
         }
     };
 </script>
