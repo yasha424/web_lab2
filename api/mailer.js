@@ -31,7 +31,7 @@ export default function handler (req, res) {
         };
     }
 
-    if (currentIpUser.count > rateLimit.ipNumberCalls ||
+    if (currentIpUser.count > rateLimit.ipNumberCalls &&
         currentTime - currentIpUser.time <= rateLimit.timeSeconds * 1000) {
         return res.status(429).json({ code: '429', error: 'Too many requests' });
     }
@@ -47,7 +47,7 @@ export default function handler (req, res) {
         .map(([key, val]) => `<p><b>${key}: </b>${val}</p>`)
         .join('\n');
 
-    const html = sanitizeHtml(`<h2> Message from  form: </h2>${lines}`);
+    const html = sanitizeHtml(`<h2> Message from ${currentIp}: </h2>${lines}`);
 
     const options = {
         from: process.env.EMAIL_ADRESS,
