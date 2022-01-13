@@ -99,8 +99,7 @@
             <div class="notify-error">{error}</div>
         {:else if successSend}
             <div class="notify-success">Message sent successfully</div>
-        {/if}
-        {#if showSpinner}
+        {:else if showSpinner}
             <div class="spinner">
                 <Moon />
             </div>
