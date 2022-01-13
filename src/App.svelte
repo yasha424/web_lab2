@@ -268,7 +268,7 @@
         }
 
         .notify-error {
-            width: 90%;
+            width: 80%;
         }
     }
 
