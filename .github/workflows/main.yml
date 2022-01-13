@@ -15,8 +15,6 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: 'npm'
-            - name: Installing dependencies
-              run: npm install
             - name: Running eslint
               run: npm run eslint
             - name: Running CSS lint
