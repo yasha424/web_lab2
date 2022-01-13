@@ -51,7 +51,7 @@ export default function handler (req, res) {
         .map(([key, val]) => `<p><b>${key}: </b>${val}</p>`)
         .join('\n');
 
-    const html = sanitizeHtml(`<h2> Message from ${currentIp}: </h2>${lines}`);
+    const html = sanitizeHtml(`<h2> Message from form </h2>${lines}`);
 
     const options = {
         from: process.env.EMAIL_ADRESS,
