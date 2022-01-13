@@ -4,8 +4,8 @@ const sanitizeHtml = require('sanitize-html');
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: process.env.HOST,
-    // port: process.env.PORT,
     secure: true,
+    port: process.env.PORT,
     auth: {
         user: process.env.EMAIL_ADRESS,
         pass: process.env.EMAIL_PASSWORD,
