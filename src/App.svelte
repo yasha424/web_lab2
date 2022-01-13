@@ -4,8 +4,10 @@
     let is_error = false;
     let error = "";
     let showSpinner = false;
+    let successSend = false;
 
     const sendMail = async() => {
+        successSend = false;
         console.log(form.elements);
         let formData = {};
         Array.from(form.elements)
@@ -49,7 +51,9 @@
             body: JSON.stringify(formData),
             method: 'POST'
         }).then((res) => {
-            console.log(res);
+            if (res.ok) {
+                successSend = true;
+            }
         });
         showSpinner = false;
     };
@@ -75,6 +79,9 @@
         {#if is_error}
             <div class="notify-error">{error}</div>
         {/if}
+        {#if successSend}
+            <div class="notify-success">Message sent successfully</div>
+        {/if}
         {#if showSpinner}
             <div class="spinner">
                 <Moon />
@@ -94,6 +101,7 @@
         --btn-transition: ease 0.3s;
         --border-color: #ddd;
         --error-color: #e11;
+        --success-color: #1e1;
         --spinner-background-color: rgba(255, 255, 255, 0.6);
     }
 
@@ -113,6 +121,18 @@
         position: relative;
     }
 
+    .notify-success {
+        width: 500px;
+        padding: 20px 20px;
+        margin: 10px auto auto auto;
+        font-size: 18px;
+        text-align: center;
+        background-color: var(--success-color);
+        box-shadow: 0 0 40px var(--shadow-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+    }
+
     .notify-error {
         width: 500px;
         padding: 20px 20px;
@@ -121,7 +141,6 @@
         text-align: center;
         background-color: var(--error-color);
         box-shadow: 0 0 40px var(--shadow-color);
-        /*margin-top: 10px;*/
         border: 1px solid var(--border-color);
         border-radius: 8px;
     }
