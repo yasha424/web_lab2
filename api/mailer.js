@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const sanitizeHtml = require('sanitize-html');
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.ukr.net',
@@ -14,12 +15,12 @@ const transporter = nodemailer.createTransport({
 });
 
 export default function handler (req, res) {
+    const html = sanitizeHtml(req.body.message);
     const options = {
         from: `"Fred Foo 👻" ${process.env.EMAIL_ADRESS}`, // sender address
         to: `${process.env.EMAIL_ADRESS}`, // list of receivers
-        subject: 'Hello ✔', // Subject line
-        text: 'Hello world?', // plain text body
-        html: '<b>Hello world?</b>' // html body
+        subject: 'WEB LAB 2 😎',
+        html: html // html body
     };
 
     transporter.sendMail(options, (error) => {

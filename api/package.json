@@ -6,6 +6,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nodemailer": "^6.7.2"
+    "nodemailer": "^6.7.2",
+    "sanitize-html": "^2.6.1"
   }
 }

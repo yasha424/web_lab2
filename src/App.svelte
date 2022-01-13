@@ -1,13 +1,42 @@
 <script>
     const form = {};
+    let is_error = false;
+    let error = "";
 
     const sendMail = async() => {
-        console.log(form);
+        if (!form.firstName) {
+            is_error = true;
+            error = "First name cannot be empty";
+            return;
+        }
+        else if (!form.lastName) {
+            is_error = true;
+            error = "Last name cannot be empty";
+            return;
+        }
+        else if (!(/^[A-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(form.email))){
+            is_error = true;
+            error = "Invalid email address";
+            return;
+        } else if (!(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(form.phone))) {
+            is_error = true;
+            error = "Invalid phone format";
+            return;
+        } else if (!form.message) {
+            is_error = true;
+            error = "Message cannot be empty";
+            return;
+        }
+
+        is_error = false;
+        error = '';
+
+        is_error = false;
         await fetch('/api/mailer', {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(form),
+            body: form,
             method: 'POST'
         }).then((res) => {
             if (res.ok) {
@@ -27,14 +56,17 @@
                 <input type="text" bind:value={form.lastName} placeholder="Last name" />
             </div>
             <div class="section">
-                <input type="email" bind:value={form.emailAddress} placeholder="Email" />
+                <input type="email" bind:value={form.email} placeholder="Email" />
                 <input type="phone" bind:value={form.phone} placeholder="Phone" />
             </div>
             <div class="section">
-                <textarea name="text" placeholder="Message"></textarea>
+                <textarea name="text" bind:value={form.message} placeholder="Message"></textarea>
             </div>
             <button type="button" class="submit" on:click={sendMail}>Send</button>
         </form>
+        {#if is_error}
+            <div class="notify-error">{error}</div>
+        {/if}
     </div>
 </main>
 
@@ -47,6 +79,8 @@
         --shadow-color: rgba(10, 10, 10, 0.2);
         --input-color: rgb(230, 230, 230);
         --btn-transition: ease 0.3s;
+        --border-color: #ddd;
+        --error-color: #e11;
     }
 
     .container {
@@ -54,8 +88,8 @@
     }
 
     .form {
-        border: 1px solid black;
-        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
         box-shadow: 0 0 40px var(--shadow-color);
         padding: 20px;
         width: 500px;
@@ -63,6 +97,19 @@
         display: grid;
         gap: 20px;
         position: relative;
+    }
+
+    .notify-error {
+        width: 500px;
+        padding: 20px 20px;
+        margin: 10px auto auto auto;
+        font-size: 18px;
+        text-align: center;
+        background-color: var(--error-color);
+        box-shadow: 0 0 40px var(--shadow-color);
+        /*margin-top: 10px;*/
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
     }
 
     .form .header {
