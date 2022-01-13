@@ -15,6 +15,9 @@ const transporter = nodemailer.createTransport({
 });
 
 export default function handler (req, res) {
+    if (!transporter) {
+        return res.status(500).send('Mail is undefined');
+    }
     const lines = Object.entries(req.body.message)
         .map(([key, val]) => `<p><b>${key}: </b>${val}</p>`)
         .join('\n');
