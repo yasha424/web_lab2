@@ -32,6 +32,7 @@
         error = '';
 
         is_error = false;
+
         await fetch('/api/mailer', {
             headers: {
                 'Content-Type': 'application/json'
