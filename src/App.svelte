@@ -61,6 +61,8 @@
             });
         } catch (e) {
             is_error = true;
+            console.log(e.json());
+            console.log(e);
             error = e.json();
         }
         showSpinner = false;
