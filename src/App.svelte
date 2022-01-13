@@ -8,6 +8,7 @@
 
     window.onoffline = () => {
         isOnline = false;
+        error = '';
     }
 
     window.ononline = () => {
@@ -41,7 +42,7 @@
             return;
         }
 
-        form.reset();
+        document.querySelector('.form').reset();
 
         error = '';
 
@@ -113,9 +114,8 @@
 
 <style>
     :root {
-        --btn-color: #35a840;
-        --btn-hover-color: #55c860;
-        --btn-border-color: #222;
+        --btn-color: #1e1;
+        --btn-hover-color: #3f3;
         --text-color: #000;
         --shadow-color: rgba(10, 10, 10, 0.2);
         --input-color: rgb(230, 230, 230);
@@ -135,7 +135,7 @@
         border-radius: 8px;
         box-shadow: 0 0 40px var(--shadow-color);
         padding: 20px;
-        width: 500px;
+        width: 450px;
         margin: auto;
         display: grid;
         gap: 20px;
@@ -143,7 +143,7 @@
     }
 
     .notify-success {
-        width: 500px;
+        width: 450px;
         padding: 20px 20px;
         margin: 10px auto auto auto;
         font-size: 18px;
@@ -155,7 +155,7 @@
     }
 
     .notify-error {
-        width: 500px;
+        width: 450px;
         padding: 20px 20px;
         margin: 10px auto auto auto;
         font-size: 18px;
@@ -205,7 +205,7 @@
     .form .submit:hover {
         transition: var(--btn-transition);
         background-color: var(--btn-hover-color);
-        border: 1px solid var(--btn-border-color);
+        border: 1px solid var(--btn-color);
     }
 
     .form .submit-offline {
@@ -230,6 +230,7 @@
         justify-content: center;
         background-color: var(--spinner-background-color);
     }
+
     @media screen and (max-width: 546px) {
         .form {
             width: 90%;
