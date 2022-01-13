@@ -1,5 +1,21 @@
 <script>
+    const form = {};
 
+    const sendMail = async() => {
+        console.log(form);
+        await fetch('/api/mailer', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form),
+            method: 'POST'
+        }).then((res) => {
+            if (res.ok) {
+                return res;
+            }
+            throw res;
+        });
+    };
 </script>
 
 <main>
@@ -7,17 +23,17 @@
         <form class="form">
             <span class="header">Email form</span>
             <div class="section">
-                <input type="text" name="firstname" placeholder="First name" />
-                <input type="text" name="lastname" placeholder="Last name" />
+                <input type="text" bind:value={form.firstName} placeholder="First name" />
+                <input type="text" bind:value={form.lastName} placeholder="Last name" />
             </div>
             <div class="section">
-                <input type="email" name="email" placeholder="Email" />
-                <input type="phone" name="phone" placeholder="Phone" />
+                <input type="email" bind:value={form.emailAddress} placeholder="Email" />
+                <input type="phone" bind:value={form.phone} placeholder="Phone" />
             </div>
             <div class="section">
                 <textarea name="text" placeholder="Message"></textarea>
             </div>
-            <button class="submit">Send</button>
+            <button type="button" class="submit" on:click={sendMail}>Send</button>
         </form>
     </div>
 </main>
@@ -26,8 +42,11 @@
     :root {
         --btn-color: #35a840;
         --btn-hover-color: #55c860;
+        --btn-border-color: #222;
         --text-color: #000;
         --shadow-color: rgba(10, 10, 10, 0.2);
+        --input-color: rgb(230, 230, 230);
+        --btn-transition: ease 0.3s;
     }
 
     .container {
@@ -47,9 +66,10 @@
     }
 
     .form .header {
+        font-size: 24px;
+        font-weight: bold;
         margin: auto;
     }
-
 
     .form .section {
         width: 100%;
@@ -57,8 +77,8 @@
         justify-content: space-between;
     }
 
-    .form input, .form textarea, .form .submit {
-        background-color: rgb(230, 230, 230);
+    .form input, .form textarea {
+        background-color: var(--input-color);
         border: none;
         border-radius: 8px;
         padding: 10px;
@@ -72,15 +92,18 @@
 
     .form .submit {
         cursor: pointer;
-        width: 80px;
+        width: 100px;
         background-color: var(--btn-color);
         color: var(--text-color);
         margin: auto;
-        user-select: none;
+        padding: 8px;
+        border: 1px solid transparent;
+        border-radius: 8px;
     }
 
     .form .submit:hover {
-        transition: ease 0.3s;
+        transition: var(--btn-transition);
         background-color: var(--btn-hover-color);
+        border: 1px solid var(--btn-border-color);
     }
 </style>
