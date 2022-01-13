@@ -69,6 +69,7 @@
                 error = 'Cannot connect to server';
             }
         } finally {
+            error = 'Unexpected error has occurred';
             showSpinner = false;
         }
     };
@@ -228,4 +229,45 @@
         justify-content: center;
         background-color: var(--spinner-background-color);
     }
+    @media screen and (max-width: 546px) {
+        .form {
+            whidth: 90%;
+            margin: auto;
+            padding: 0;
+            gap: 0;
+        }
+
+        .form .header {
+            padding: 10px 0;
+        }
+
+        .form .section {
+            width: 90%;
+            display: grid;
+            margin: auto;
+            justify-content: normal;
+        }
+
+        .form input, .section textarea {
+            background-color: var(--input-color);
+            width: 100%;
+        }
+
+        .form .submit {
+            margin: 10px auto;
+        }
+
+        .form .submit-offline {
+            margin: 10px auto;
+        }
+
+        .notify-success {
+            width: 80%;
+        }
+
+        .notify-error {
+            width: 90%;
+        }
+    }
+
 </style>

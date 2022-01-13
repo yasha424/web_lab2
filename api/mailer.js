@@ -5,6 +5,8 @@ const sanitizeHtml = require('sanitize-html');
 const transporter = nodemailer.createTransport(smtpTransport({
     service: process.env.SERVICE,
     host: process.env.HOST,
+    port: 587,
+    secure: false,
     auth: {
         user: process.env.EMAIL_ADDRESS,
         pass: process.env.EMAIL_PASS,
