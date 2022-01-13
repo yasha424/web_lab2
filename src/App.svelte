@@ -63,7 +63,7 @@
             is_error = true;
             console.log(e.json());
             console.log(e);
-            error = e.json();
+            error = e.json().error;
         }
         showSpinner = false;
     };
