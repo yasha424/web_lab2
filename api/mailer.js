@@ -1,14 +1,15 @@
 const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 const sanitizeHtml = require('sanitize-html');
 
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport(smtpTransport({
     service: process.env.SERVICE,
     host: process.env.HOST,
     auth: {
         user: process.env.EMAIL_ADDRESS,
         pass: process.env.EMAIL_PASS,
     },
-});
+}));
 
 const rateLimit = {
     ipNumberCalls: 3,
@@ -60,7 +61,6 @@ export default function handler (req, res) {
 
     transporter.sendMail(options, (error) => {
         if (error) {
-            console.error('Error sending mail', error.message);
             return res.status(500).json({ error: error.message });
         }
         return res.status(200).json({ data: 'ok' });

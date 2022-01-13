@@ -45,8 +45,10 @@
             }).then((res) => {
                 if (res.ok) {
                     successSend = true;
+                    showSpinner = false;
                     return res;
                 } else {
+                    showSpinner = false;
                     throw res;
                 }
             });
@@ -60,7 +62,6 @@
                 error = 'Cannot connect to server';
             }
         }
-        showSpinner = false;
     };
 </script>
 
