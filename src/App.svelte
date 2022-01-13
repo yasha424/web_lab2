@@ -69,7 +69,6 @@
                 error = 'Cannot connect to server';
             }
         } finally {
-            error = 'Unexpected error has occurred';
             showSpinner = false;
         }
     };
