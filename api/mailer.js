@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const sanitizeHtml = require('sanitize-html');
+// const sanitizeHtml = require('sanitize-html');
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.ukr.net',
@@ -18,12 +18,12 @@ export default function handler (req, res) {
     if (!transporter) {
         return res.status(500).send('Mail is undefined');
     }
-    const lines = Object.entries(req.body.message)
-        .map(([key, val]) => `<p><b>${key}: </b>${val}</p>`)
-        .join('\n');
+    // const lines = Object.entries(req.body.message)
+    //     .map(([key, val]) => `<p><b>${key}: </b>${val}</p>`)
+    //     .join('\n');
 
-    const html = sanitizeHtml(`<h2> Message from  form: </h2>${lines}`);
-
+    // const html = sanitizeHtml(`<h2> Message from  form: </h2>${lines}`);
+    const html = '';
     const options = {
         from: `${process.env.EMAIL_ADRESS}`, // sender address
         to: `${process.env.EMAIL_ADRESS}`, // list of receivers
