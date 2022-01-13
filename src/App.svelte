@@ -44,17 +44,25 @@
         error = '';
 
         showSpinner = true;
-        await fetch('/api/mailer', {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData),
-            method: 'POST'
-        }).then((res) => {
-            if (res.ok) {
-                successSend = true;
-            }
-        });
+        try {
+            await fetch('/api/mailer', {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData),
+                method: 'POST'
+            }).then((res) => {
+                if (res.ok) {
+                    successSend = true;
+                    return res;
+                } else {
+                    throw res;
+                }
+            });
+        } catch (e) {
+            is_error = true;
+            error = e.json();
+        }
         showSpinner = false;
     };
 </script>

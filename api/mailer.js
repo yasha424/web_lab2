@@ -63,7 +63,7 @@ export default function handler (req, res) {
     transporter.sendMail(options, (error) => {
         if (error) {
             console.error('Error sending mail', error.message);
-            return res.status(500).json({ code: '500', error: error.message });
+            return res.status(500).json({ error: error.message });
         }
         return res.status(200).json({ data: 'ok' });
     });
