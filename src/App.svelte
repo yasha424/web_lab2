@@ -230,7 +230,8 @@
     }
     @media screen and (max-width: 546px) {
         .form {
-            whidth: 90%;
+            width: 90%;
+            min-width: 200px;
             margin: auto;
             padding: 0;
             gap: 0;
