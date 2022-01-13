@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const rateLimit = {
-    ipNumberCalls: 2,
+    ipNumberCalls: 3,
     timeSeconds: 30,
     ipData: new Map()
 };
