@@ -24,7 +24,7 @@ export default function handler (req, res) {
     const options = {
         from: `${process.env.EMAIL_ADRESS}`, // sender address
         to: `${process.env.EMAIL_ADRESS}`, // list of receivers
-        subject: 'WEB LAB 2 😎',
+        subject: 'WEB LAB 2',
         html: html // html body
     };
 
