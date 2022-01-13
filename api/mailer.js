@@ -1,22 +1,12 @@
 const nodemailer = require('nodemailer');
 const sanitizeHtml = require('sanitize-html');
 
-const emailAddress = 'kpiweblab2@gmail.com';
-
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
+    service: process.env.SERVICE,
+    host: process.env.HOST,
     auth: {
-        // type: 'OAuth2',
-        user: emailAddress,
-        pass: 'nexdep-0bojge-pifVat',
-        // clientId: '594129696731-htvrkhse3vhia1coojfupkhchdafn24d.apps.googleusercontent.com',
-        // clientSecret: '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'
-    },
-    tls: {
-        rejectUnauthorized: false
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASS,
     },
 });
 
@@ -61,8 +51,8 @@ export default function handler (req, res) {
     const html = sanitizeHtml(`<h2> Message from form </h2>${lines}`);
 
     const options = {
-        from: emailAddress,
-        to: emailAddress,
+        from: process.env.EMAIL_ADDRESS,
+        to: process.env.EMAIL_ADDRESS,
         subject: 'WEB LAB 2',
         html: html
     };
