@@ -1,7 +1,9 @@
 <script>
+    import { Moon } from 'svelte-loading-spinners';
     let form = {};
     let is_error = false;
     let error = "";
+    let showSpinner = false;
 
     const sendMail = async() => {
         console.log(form.elements);
@@ -39,6 +41,7 @@
         is_error = false;
         error = '';
 
+        showSpinner = true;
         await fetch('/api/mailer', {
             headers: {
                 'Content-Type': 'application/json'
@@ -48,6 +51,7 @@
         }).then((res) => {
             console.log(res);
         });
+        showSpinner = false;
     };
 </script>
 
@@ -71,6 +75,11 @@
         {#if is_error}
             <div class="notify-error">{error}</div>
         {/if}
+        {#if showSpinner}
+            <div class="spinner">
+                <Moon />
+            </div>
+        {/if}
     </div>
 </main>
 
@@ -85,6 +94,7 @@
         --btn-transition: ease 0.3s;
         --border-color: #ddd;
         --error-color: #e11;
+        --spinner-background-color: rgba(255, 255, 255, 0.6);
     }
 
     .container {
@@ -156,5 +166,17 @@
         transition: var(--btn-transition);
         background-color: var(--btn-hover-color);
         border: 1px solid var(--btn-border-color);
+    }
+
+    .spinner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--spinner-background-color);
     }
 </style>

@@ -2,12 +2,12 @@ const nodemailer = require('nodemailer');
 const sanitizeHtml = require('sanitize-html');
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.ukr.net',
-    port: 465,
-    secure: true, // true for 465, false for other ports
+    host: process.env.HOST,
+    port: process.env.PORT,
+    secure: true,
     auth: {
-        user: process.env.EMAIL_ADRESS, // generated ethereal user
-        pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+        user: process.env.EMAIL_ADRESS,
+        pass: process.env.EMAIL_PASSWORD,
     },
     tls: {
         rejectUnauthorized: false
@@ -25,10 +25,10 @@ export default function handler (req, res) {
     const html = sanitizeHtml(`<h2> Message from  form: </h2>${lines}`);
 
     const options = {
-        from: `${process.env.EMAIL_ADRESS}`, // sender address
-        to: `${process.env.EMAIL_ADRESS}`, // list of receivers
+        from: process.env.EMAIL_ADRESS,
+        to: process.env.EMAIL_ADRESS,
         subject: 'WEB LAB 2',
-        html: html // html body
+        html: html
     };
 
     transporter.sendMail(options, (error) => {
