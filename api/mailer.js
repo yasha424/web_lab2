@@ -24,6 +24,7 @@ export default function handler (req, res) {
     const currentTime = new Date();
     const currentIp = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
     let currentIpUser = rateLimit.ipData.get(currentIp);
+
     if (!currentIpUser) {
         currentIpUser = {
             count: 0,
