@@ -9,11 +9,11 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        type: 'OAuth2',
+        // type: 'OAuth2',
         user: emailAddress,
         pass: 'nexdep-0bojge-pifVat',
-        clientId: '594129696731-htvrkhse3vhia1coojfupkhchdafn24d.apps.googleusercontent.com',
-        clientSecret: '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'
+        // clientId: '594129696731-htvrkhse3vhia1coojfupkhchdafn24d.apps.googleusercontent.com',
+        // clientSecret: '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'
     },
     tls: {
         rejectUnauthorized: false
