@@ -40,10 +40,7 @@
             body: form,
             method: 'POST'
         }).then((res) => {
-            if (res.ok) {
-                return res;
-            }
-            throw res;
+            console.log(res);
         });
     };
 </script>
