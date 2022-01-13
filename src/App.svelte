@@ -1,9 +1,14 @@
 <script>
+    // import sanitizeHtml from 'sanitize-html';
+
     const form = {};
     let is_error = false;
     let error = "";
 
     const sendMail = async() => {
+        form.message = document.querySelector('.section .message');
+        console.log(form.message.value);
+
         if (!form.firstName) {
             is_error = true;
             error = "First name cannot be empty";
@@ -22,7 +27,7 @@
             is_error = true;
             error = "Invalid phone format";
             return;
-        } else if (!form.message) {
+        } else if (!form.message.value) {
             is_error = true;
             error = "Message cannot be empty";
             return;
@@ -30,8 +35,6 @@
 
         is_error = false;
         error = '';
-
-        is_error = false;
 
         await fetch('/api/mailer', {
             headers: {
@@ -58,7 +61,7 @@
                 <input type="phone" bind:value={form.phone} placeholder="Phone" />
             </div>
             <div class="section">
-                <textarea name="text" bind:value={form.message} placeholder="Message"></textarea>
+                <textarea name="text" class="message" placeholder="Message"></textarea>
             </div>
             <button type="button" class="submit" on:click={sendMail}>Send</button>
         </form>

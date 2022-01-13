@@ -35,6 +35,7 @@
     },
     "dependencies": {
         "husky": "^7.0.4",
+        "sanitize-html": "^2.6.1",
         "sirv-cli": "^1.0.0"
     }
 }
