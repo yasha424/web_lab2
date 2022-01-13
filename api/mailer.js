@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 
 const rateLimit = {
     ipNumberCalls: 2,
-    timeSeconds: 60,
+    timeSeconds: 30,
     ipData: new Map()
 };
 
@@ -34,6 +34,10 @@ export default function handler (req, res) {
     if (currentIpUser.count > rateLimit.ipNumberCalls &&
         currentTime - currentIpUser.time <= rateLimit.timeSeconds * 1000) {
         return res.status(429).json({ code: '429', error: 'Too many requests' });
+    }
+
+    if (currentTime - currentIpUser.time > rateLimit.timeSeconds * 1000) {
+        currentIpUser.count = 0;
     }
 
     currentIpUser.count++;
