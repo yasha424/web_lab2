@@ -41,6 +41,8 @@
             return;
         }
 
+        form.reset();
+
         error = '';
 
         showSpinner = true;
