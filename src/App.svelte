@@ -22,19 +22,18 @@
             .forEach((e) => {
                 formData[e.name] = e.value;
             });
-
-        if (!form.FirstName) {
+        if (!form.firstName.value) {
             error = "First name cannot be empty";
             return;
         }
-        else if (!form.LastName) {
+        else if (!form.lastName.value) {
             error = "Last name cannot be empty";
             return;
         }
-        else if (!(/^[A-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(form.Email))){
+        else if (!(/^[A-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(form.email.value))){
             error = "Invalid email address";
             return;
-        } else if (!(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(form.Phone))) {
+        } else if (!(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(form.phone.value))) {
             error = "Invalid phone format";
             return;
         } else if (!form.message.value) {
@@ -42,11 +41,10 @@
             return;
         }
 
-        document.querySelector('.form').reset();
-
+        form.reset();
         error = '';
-
         showSpinner = true;
+
         try {
             await fetch('/api/mailer', {
                 headers: {
@@ -82,12 +80,12 @@
         <form class="form" bind:this={form}>
             <span class="header">Email form</span>
             <div class="section">
-                <input name="firstName" type="text" bind:value={form.FirstName} placeholder="First name" />
-                <input name="lastName" type="text" bind:value={form.LastName} placeholder="Last name" />
+                <input name="firstName" type="text" placeholder="First name" />
+                <input name="lastName" type="text" placeholder="Last name" />
             </div>
             <div class="section">
-                <input name="email" type="email" bind:value={form.Email} placeholder="Email" />
-                <input name="phone" type="phone" bind:value={form.Phone} placeholder="Phone" />
+                <input name="email" type="email" placeholder="Email" />
+                <input name="phone" type="phone" placeholder="Phone" />
             </div>
             <div class="section">
                 <textarea name="message" class="message" placeholder="Message"></textarea>
