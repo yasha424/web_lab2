@@ -68,6 +68,8 @@
                 error = 'Server error';
             } else if (e.status === 404) {
                 error = 'Cannot connect to server';
+            } else {
+                error = e.message;
             }
         } finally {
             showSpinner = false;
@@ -270,5 +272,4 @@
             width: 80%;
         }
     }
-
 </style>
